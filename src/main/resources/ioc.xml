@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!--    <bean id="userDao" class="org.example.Dao.UserDao">-->
+<!--        &lt;!&ndash; collaborators and configuration for this bean go here &ndash;&gt;-->
+<!--    </bean>-->
+    <!-- 配置Service -->
+    <!-- 使用静态工厂方法实例化 -->
+    <bean id="userService" class="org.example.Service.UserService" factory-method="getService">
+    </bean>
+    <!-- 使用实例工厂方法实例化 -->
+    <bean id="userDao" factory-bean="userService" factory-method="create"/>
+<!--    <alias name="userDao" alias="userDao2"/>-->
+
+</beans>
