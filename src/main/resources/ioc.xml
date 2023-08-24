@@ -7,12 +7,19 @@
 <!--    <bean id="userDao" class="org.example.Dao.UserDao">-->
 <!--        &lt;!&ndash; collaborators and configuration for this bean go here &ndash;&gt;-->
 <!--    </bean>-->
-    <!-- 配置Service -->
-    <!-- 使用静态工厂方法实例化 -->
-    <bean id="userService" class="org.example.Service.UserService" factory-method="getService">
-    </bean>
-    <!-- 使用实例工厂方法实例化 -->
-    <bean id="userDao" factory-bean="userService" factory-method="create"/>
+<!--    &lt;!&ndash; 配置Service &ndash;&gt;-->
+<!--    &lt;!&ndash; 使用静态工厂方法实例化 &ndash;&gt;-->
+<!--    <bean id="userService" class="org.example.Service.UserService" factory-method="getService">-->
+<!--    </bean>-->
+<!--    &lt;!&ndash; 使用实例工厂方法实例化 &ndash;&gt;-->
+<!--    <bean id="userDao" factory-bean="userService" factory-method="create"/>-->
 <!--    <alias name="userDao" alias="userDao2"/>-->
+    <bean id="userDao" class="org.example.Dao.UserDao"/>
+    <bean id="addressDao" class="org.example.Dao.AddressDao"/>
+
+    <bean id="userService" class="org.example.Service.UserService">
+        <constructor-arg ref="userDao"/>
+        <constructor-arg ref="addressDao"/>
+    </bean>
 
 </beans>
