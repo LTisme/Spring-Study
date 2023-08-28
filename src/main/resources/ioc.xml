@@ -29,4 +29,31 @@
         <property name="addressDao" ref="addressDao"/>
     </bean>
 
+    <!--不同数据类型的注入，除了数组、集合和Map等要写写相应标签之外，基本上都是能自动识别的-->
+    <bean id="user" class="org.example.Entity.User">
+        <property name="name" value="lily"/>
+        <property name="age" value="12"/>
+        <property name="hobbies">
+            <array>
+                <value>basketball</value>
+                <value>football</value>
+            </array>
+        </property>
+        <property name="friends">
+            <list>
+                <value>tom</value>
+                <value>jerry</value>
+            </list>
+        </property>
+        <property name="parents">
+            <map>
+                <entry key="father" value="Dragon"/>
+                <entry key="mother" value="Phoenix"/>
+            </map>
+        </property>
+        <property name="address">
+            <null/>
+        </property>
+    </bean>
+
 </beans>

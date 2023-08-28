@@ -1,4 +1,5 @@
 import org.example.Dao.UserDao;
+import org.example.Entity.User;
 import org.example.Service.UserService;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -17,18 +18,23 @@ public class testIOC {
 
     private static final Logger logger = LoggerFactory.getLogger(testIOC.class);
 
+    private static final ApplicationContext context = new ClassPathXmlApplicationContext("ioc.xml");
+
     @Test
     public void testIOC(){
-        ApplicationContext context = new ClassPathXmlApplicationContext("ioc.xml");
         UserDao userDao = context.getBean(UserDao.class);
         userDao.sayHello();
     }
 
     @Test
     public void testStaticFactory(){
-        ApplicationContext context = new ClassPathXmlApplicationContext("ioc.xml");
         UserService userService = (UserService) context.getBean("userService");
-        //System.out.println(userService);
         logger.info(userService.toString());
+    }
+
+    @Test
+    public void testUser(){
+        User user = context.getBean(User.class);
+        logger.info(user.toString());
     }
 }
