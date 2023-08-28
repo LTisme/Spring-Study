@@ -27,8 +27,8 @@ public class testIOC {
     @Test
     public void testStaticFactory(){
         ApplicationContext context = new ClassPathXmlApplicationContext("ioc.xml");
-        UserDao userDao = (UserDao) context.getBean("userService");
+        UserService userService = (UserService) context.getBean("userService");
         //System.out.println(userService);
-        logger.info(userDao.toString());
+        logger.info(userService.toString());
     }
 }
