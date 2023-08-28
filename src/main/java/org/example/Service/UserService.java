@@ -23,6 +23,14 @@ public class UserService {
         this.addressDao = addressDao;
     }
 
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    public void setAddressDao(AddressDao addressDao) {
+        this.addressDao = addressDao;
+    }
+
     // 采用单例模式
     private static final UserService userService = new UserService();
 

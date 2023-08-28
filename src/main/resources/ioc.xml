@@ -17,11 +17,16 @@
     <bean id="userDao" class="org.example.Dao.UserDao"/>
     <bean id="addressDao" class="org.example.Dao.AddressDao"/>
 
-    <!--DI注入之——构造器注入-->
+    <!--    &lt;!&ndash;DI注入之——构造器注入&ndash;&gt;-->
+    <!--    <bean id="userService" class="org.example.Service.UserService">-->
+    <!--        <constructor-arg index="0" ref="userDao"/>-->
+    <!--        <constructor-arg index="1" ref="addressDao"/>-->
+    <!--    </bean>-->
+    <!--DI注入之二—setter注入-->
     <bean id="userService" class="org.example.Service.UserService">
-        <constructor-arg index="0" ref="userDao"/>
-        <constructor-arg index="1" ref="addressDao"/>
+        <!--对应的类中需要有相应的setter方法才行，然后下方的property才是它们注入的参数-->
+        <property name="userDao" ref="userDao"/>
+        <property name="addressDao" ref="addressDao"/>
     </bean>
-
 
 </beans>
