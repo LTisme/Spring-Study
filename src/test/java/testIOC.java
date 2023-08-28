@@ -34,6 +34,19 @@ public class testIOC {
 
     @Test
     public void testUser(){
+        User user = (User)context.getBean("user");
+        logger.info(user.toString());
+    }
+
+    @Test
+    public void testPCTag(){
+        User user = (User)context.getBean("a");
+        logger.info(user.toString());
+    }
+
+    @Test
+    public void testAutoWired(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("autowired.xml");
         User user = context.getBean(User.class);
         logger.info(user.toString());
     }

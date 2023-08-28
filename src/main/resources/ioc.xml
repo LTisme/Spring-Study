@@ -58,6 +58,6 @@
     </bean>
 
     <!--如果你用p命名空间，需要在文件头中采用p标签声明-->
-    <bean id="a" class="org.example.Entity.User" p:address="null"/>
+    <bean id="a" class="org.example.Entity.User" p:name="rose" p:age="18"/>
 
 </beans>
