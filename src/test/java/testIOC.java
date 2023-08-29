@@ -1,5 +1,6 @@
 import org.example.Dao.UserDao;
 import org.example.Entity.A;
+import org.example.Entity.Address;
 import org.example.Entity.B;
 import org.example.Entity.User;
 import org.example.Service.UserService;
@@ -63,5 +64,13 @@ public class testIOC {
         B b = context.getBean(B.class);
         logger.info(a.toString());
         logger.info(b.toString());
+    }
+
+    @Test
+    public void testLifeCycle(){
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("autowired.xml");
+        Address address = context.getBean(Address.class);
+        context.close();
+        logger.info("{}", address);
     }
 }
