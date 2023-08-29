@@ -1,4 +1,6 @@
 import org.example.Dao.UserDao;
+import org.example.Entity.A;
+import org.example.Entity.B;
 import org.example.Entity.User;
 import org.example.Service.UserService;
 import org.junit.Test;
@@ -49,5 +51,14 @@ public class testIOC {
         ApplicationContext context = new ClassPathXmlApplicationContext("autowired.xml");
         User user = context.getBean(User.class);
         logger.info(user.toString());
+    }
+
+    @Test
+    public void testCycle(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("cycle.xml");
+        A a = context.getBean(A.class);
+        B b = context.getBean(B.class);
+        logger.info(a.toString());
+        logger.info(b.toString());
     }
 }

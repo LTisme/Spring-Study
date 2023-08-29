@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--这里使用setter注入是没问题的，但是如果使用构造器注入则会出现问题-->
+    <!--    <bean id="a" class="org.example.Entity.A" p:b-ref="b"/>-->
+    <!--    <bean id="b" class="org.example.Entity.B" p:a-ref="a"/>-->
+
+    <!--采用构造器注入的循环依赖如果不采用一些手段，比如两级缓存的话，就会报错-->
+    <!--错误原因就是在创建A的过程中需要依赖B，于是去创建B，而在创建B的过程中需要依赖A，这个时候A未创建完成，于是报错-->
+    <bean id="a" class="org.example.Entity.A">
+        <constructor-arg name="b" ref="b"/>
+    </bean>
+    <bean id="b" class="org.example.Entity.B">
+        <constructor-arg name="a" ref="a"/>
+    </bean>
+</beans>
