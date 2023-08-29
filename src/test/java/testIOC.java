@@ -1,8 +1,5 @@
 import org.example.Dao.UserDao;
-import org.example.Entity.A;
-import org.example.Entity.Address;
-import org.example.Entity.B;
-import org.example.Entity.User;
+import org.example.Entity.*;
 import org.example.Service.UserService;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -81,6 +78,14 @@ public class testIOC {
         A b = (A) context.getBean("b");
         logger.info("{}", a);
         logger.info("{}", b);
+        context.close();
+    }
+
+    @Test
+    public void testAware(){
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("aware.xml");
+        C c = context.getBean(C.class);
+        c.printName();
         context.close();
     }
 }
