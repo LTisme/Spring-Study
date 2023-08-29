@@ -5,7 +5,9 @@
 		https://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="address" class="org.example.Entity.Address"/>
-    <bean id="user" class="org.example.Entity.User" autowire="byType">
+    <!--加了prototype这个原型作用域，就会不再让这个实例变为单例，容器只管创建这个实例，而这个实例之后的使用、消亡都不会再和容器有关-->
+    <!--所以后面你getBean(User.class)两次时，会让容器创建两个User实例，而非之前默认的单例了-->
+    <bean id="user" class="org.example.Entity.User" autowire="byType" scope="prototype">
         <property name="name" value="lily"/>
         <property name="age" value="12"/>
         <property name="hobbies">
@@ -26,8 +28,8 @@
                 <entry key="mother" value="Phoenix"/>
             </map>
         </property>
-<!--        <property name="address">-->
-<!--            <null/>-->
-<!--        </property>-->
+        <!--        <property name="address">-->
+        <!--            <null/>-->
+        <!--        </property>-->
     </bean>
 </beans>

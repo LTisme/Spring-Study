@@ -49,8 +49,11 @@ public class testIOC {
     @Test
     public void testAutoWired(){
         ApplicationContext context = new ClassPathXmlApplicationContext("autowired.xml");
-        User user = context.getBean(User.class);
-        logger.info(user.toString());
+        User user1 = context.getBean(User.class);
+        User user2 = context.getBean(User.class);
+        logger.info(user1.toString());
+        logger.info(user2.toString());
+        logger.info(String.valueOf(user1 == user2));
     }
 
     @Test
