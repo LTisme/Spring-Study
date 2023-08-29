@@ -70,7 +70,17 @@ public class testIOC {
     public void testLifeCycle(){
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("autowired.xml");
         Address address = context.getBean(Address.class);
-        context.close();
         logger.info("{}", address);
+        context.close();
+    }
+
+    @Test
+    public void testLowCouplingLifeCycle(){
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("lifecycle.xml");
+        A a = (A)context.getBean("a");
+        A b = (A) context.getBean("b");
+        logger.info("{}", a);
+        logger.info("{}", b);
+        context.close();
     }
 }
