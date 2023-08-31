@@ -1,5 +1,6 @@
 import org.example.Dao.UserDao;
 import org.example.Entity.*;
+import org.example.Entity.ForAnnotationTest.Boy;
 import org.example.Service.UserService;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -87,5 +88,12 @@ public class testIOC {
         C c = context.getBean(C.class);
         c.printName();
         context.close();
+    }
+
+    @Test
+    public void testAnnotation_Autowired(){
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("annotation.xml");
+        Boy boy = context.getBean(Boy.class);
+        logger.info("{}", boy);
     }
 }
