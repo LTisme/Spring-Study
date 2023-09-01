@@ -1,6 +1,7 @@
 import org.example.Dao.UserDao;
 import org.example.Entity.*;
 import org.example.Entity.ForAnnotationTest.Boy;
+import org.example.Service.OrderService;
 import org.example.Service.UserService;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -95,5 +96,12 @@ public class testIOC {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("annotation.xml");
         Boy boy = context.getBean(Boy.class);
         logger.info("{}", boy);
+    }
+
+    @Test
+    public void testScan(){
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("scan.xml");
+        OrderService orderService = context.getBean(OrderService.class);
+        logger.info("{}", orderService);
     }
 }
