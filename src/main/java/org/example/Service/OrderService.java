@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
  * @ClassName: OrderService
  * @Description: comment here
  */
-
+// 扫包就相当于扫到：<bean class="org.example.Service.OrderService"/>
 @Service
 public class OrderService {
 }

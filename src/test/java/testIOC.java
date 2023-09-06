@@ -1,3 +1,4 @@
+import org.example.Config.MyConfiguration;
 import org.example.Dao.UserDao;
 import org.example.Entity.*;
 import org.example.Entity.ForAnnotationTest.Boy;
@@ -7,6 +8,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -103,5 +105,20 @@ public class testIOC {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("scan.xml");
         OrderService orderService = context.getBean(OrderService.class);
         logger.info("{}", orderService);
+    }
+
+    // 完全抛弃配置文件，在配置类上加上注解也是可以的，注意类已经不能再使用 ClassPathXmlApplicationContext 了
+    @Test
+    public void testScan2(){
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext("org.example");
+        OrderService orderService = context.getBean(OrderService.class);
+        logger.info("{}", orderService);
+    }
+
+    @Test
+    public void testBean(){
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext("org.example");
+        User user = context.getBean(User.class);
+        logger.info("{}", user);
     }
 }

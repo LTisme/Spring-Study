@@ -9,5 +9,7 @@
 
     <!--开启了扫包-->
     <!--`<context:component-scan>` 的使用会隐式启用  `<context:annotation-config>`，当使用 `<context:component-scan>`时，通常不需要包含`<context:annotation-config>`元素。-->
-    <context:component-scan base-package="org.example"/>
+<!--    <context:component-scan base-package="org.example"/>-->
+    <context:annotation-config/>
+    <bean class="org.example.AppConfig"/>
 </beans>
