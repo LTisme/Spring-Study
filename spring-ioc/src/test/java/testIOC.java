@@ -2,6 +2,7 @@ import org.example.Config.MyConfiguration;
 import org.example.Dao.UserDao;
 import org.example.Entity.*;
 import org.example.Entity.ForAnnotationTest.Boy;
+import org.example.FactoryBean.DataSourceFactoryBean;
 import org.example.Service.OrderService;
 import org.example.Service.UserService;
 import org.junit.Test;
@@ -10,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import javax.sql.DataSource;
 
 /**
  * @Date: 2023/8/21
@@ -120,5 +123,16 @@ public class testIOC {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext("org.example");
         User user = context.getBean(User.class);
         logger.info("{}", user);
+    }
+
+    @Test
+    public void testFactoryBean(){
+        // 但是这里就不能使用扫包的方式了
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DataSourceFactoryBean.class);
+        DataSource ds = (DataSource)context.getBean("dataSourceFactoryBean");
+        // 技巧：在字符串名称前加一个前缀&就能获取到FactoryBean本身，而不是FactoryBean创建的对象
+        DataSourceFactoryBean df = (DataSourceFactoryBean)context.getBean("&dataSourceFactoryBean");
+        logger.info("{}", ds);
+        logger.info("{}", df);
     }
 }
