@@ -1,8 +1,9 @@
-import org.example.Config.MyConfiguration;
+import org.example.Config.atValueConfig;
+import org.example.Config.whateverConfig;
 import org.example.Dao.UserDao;
-import org.example.DataSource.DataSourceConfig;
 import org.example.Entity.*;
 import org.example.Entity.ForAnnotationTest.Boy;
+import org.example.Env.MyPropertySource;
 import org.example.FactoryBean.DataSourceFactoryBean;
 import org.example.Service.OrderService;
 import org.example.Service.UserService;
@@ -12,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.MutablePropertySources;
 
 import javax.sql.DataSource;
 
@@ -150,5 +153,28 @@ public class testIOC {
         // 使用
         DataSource dataSource = context.getBean(DataSource.class);
         logger.info("{}", dataSource);
+    }
+
+    @Test
+    public void testEnvironmentProperty(){
+        // 创建空容器
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        // 激活指定环境
+        ConfigurableEnvironment environment = context.getEnvironment();
+        MutablePropertySources propertySources = environment.getPropertySources();
+        propertySources.addFirst(new MyPropertySource("my"));
+        context.refresh();
+        // 使用
+        String hello = environment.getProperty("hello");
+        logger.info("{}", hello);
+
+    }
+
+    @Test
+    public void testAtValue(){
+        // 创建空容器
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(atValueConfig.class, whateverConfig.class);
+        whateverConfig bean = context.getBean(whateverConfig.class);
+        System.out.println(bean);
     }
 }
