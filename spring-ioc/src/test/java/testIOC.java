@@ -1,5 +1,6 @@
 import org.example.Config.MyConfiguration;
 import org.example.Dao.UserDao;
+import org.example.DataSource.DataSourceConfig;
 import org.example.Entity.*;
 import org.example.Entity.ForAnnotationTest.Boy;
 import org.example.FactoryBean.DataSourceFactoryBean;
@@ -134,5 +135,20 @@ public class testIOC {
         DataSourceFactoryBean df = (DataSourceFactoryBean)context.getBean("&dataSourceFactoryBean");
         logger.info("{}", ds);
         logger.info("{}", df);
+    }
+
+    @Test
+    public void testEnvironmentProfile(){
+        // 创建空容器
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        // 激活指定环境
+        context.getEnvironment().setActiveProfiles("product");
+        // 通过扫包在容器中注入相应的类
+        context.scan("org.example.DataSource");
+        // 刷新容器
+        context.refresh();
+        // 使用
+        DataSource dataSource = context.getBean(DataSource.class);
+        logger.info("{}", dataSource);
     }
 }
