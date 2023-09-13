@@ -5,6 +5,7 @@ import org.example.Entity.*;
 import org.example.Entity.ForAnnotationTest.Boy;
 import org.example.Env.MyPropertySource;
 import org.example.FactoryBean.DataSourceFactoryBean;
+import org.example.Listener.*;
 import org.example.Service.OrderService;
 import org.example.Service.UserService;
 import org.junit.Test;
@@ -172,9 +173,38 @@ public class testIOC {
 
     @Test
     public void testAtValue(){
-        // 创建空容器
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(atValueConfig.class, whateverConfig.class);
         whateverConfig bean = context.getBean(whateverConfig.class);
         System.out.println(bean);
+    }
+
+    // 这里是事件机制——你可以用容器发布事件，一旦这个事件发生，对应的监听这个事件的监听器就会有相应的动作
+    // 这里是不写数据源，因为event类中已经有了代替数据源的作用
+    @Test
+    public void testEvent(){
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(EmailListener.class, MessageListener.class);
+        context.publishEvent(new OrderEvent("nothing", "12345", "lily"));
+    }
+
+    // 这里是事件机制——你可以用容器发布事件，一旦这个事件发生，对应的监听这个事件的监听器就会有相应的动作
+    // 如果另起一个数据源，则在event中无需做繁琐操作
+    @Test
+    public void testEvent2(){
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(EmailListener2.class, MessageListener2.class);
+        context.publishEvent(new OrderEvent2(new Order("12345678", "lily")));
+    }
+
+    // 这里是事件机制——你可以用容器发布事件，一旦这个事件发生，对应的监听这个事件的监听器就会有相应的动作
+    // 你也可以不用实现ApplicationListener接口，而是使用@EventListener将某个方法标记为监听事件即可
+    @Test
+    public void testEvent3(){
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(EmailListener3.class, MessageListener3.class);
+        context.publishEvent(new OrderEvent2(new Order("87654321", "lily")));
+    }
+
+    // Spring 自带一些标准的事件，无需手动发布，只要做了相应的监听器就能自动运行
+    @Test
+    public void testEvent4(){
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ContextFinish.class);
     }
 }
