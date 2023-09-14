@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--    <bean id="employee" class="org.example.Employee"/>-->
+    <bean id="company" class="org.example.Company">
+        <property name="name" value="lucy"/>
+        <!--以往来说，这里需要一个其他的bean，然后引用过来-->
+        <!--        <property name="managingDirector" ref="employee"/>-->
+        <!--但是如果用字符串的话,来指明这个被依赖的bean,就需要用到propertyEditor了-->
+        <property name="managingDirector" value="lily"/>
+    </bean>
+
+    <!--需要在xml中注册一下自定义的属性编辑器,让spring能识别字符串为其他的-->
+    <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="customEditors">
+            <map>
+                <!--在这里说明了,哪个被字符串描述的属性需要用哪个PropertyEditor来识别-->
+                <entry key="org.example.Employee" value="org.example.EmployeeEditor"/>
+            </map>
+        </property>
+    </bean>
+
+</beans>

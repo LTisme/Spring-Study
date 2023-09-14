@@ -1,7 +1,10 @@
 import org.example.Company;
 import org.example.Employee;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * @Date: 2023/9/14
@@ -11,6 +14,8 @@ import org.springframework.beans.BeanWrapperImpl;
  */
 
 public class testTools {
+
+    private static final Logger logger = LoggerFactory.getLogger(testTools.class);
 
     // 用BeanWrapper可以使用简化的API来操控复杂的反射操作
     @Test
@@ -28,5 +33,12 @@ public class testTools {
 
         // 拿到包装的实例
         System.out.println(beanWrapper.getWrappedInstance());
+    }
+
+    @Test
+    public void testPropertyEditor(){
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("propertyEditor.xml");
+        Company company = context.getBean(Company.class);
+        logger.info("{}", company);
     }
 }
