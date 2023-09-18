@@ -1,10 +1,13 @@
 import org.example.Company;
 import org.example.Employee;
+import org.example.EmployeeValidator;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.DataBinder;
 
 /**
  * @Date: 2023/9/14
@@ -47,5 +50,21 @@ public class testTools {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("propertyEditorAndConverter.xml");
         Employee employee = context.getBean(Employee.class);
         logger.info("{}", employee);
+    }
+
+    // 开启数据校验，这里了解就好，在SpringMVC里会有用场
+    @Test
+    public void testDataBinder(){
+        Employee employee = new Employee();
+        employee.setSalary(1500);
+
+        // 绑定校验对象和校验规则
+        DataBinder dataBinder = new DataBinder(employee);
+        dataBinder.addValidators(new EmployeeValidator());
+        // 开启校验
+        dataBinder.validate();
+        // 获得校验结果
+        BindingResult bindingResult = dataBinder.getBindingResult();
+        logger.info("{}", bindingResult);
     }
 }
