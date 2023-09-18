@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--您可以使用SpEL表达式和基于xml或基于注解的配置元数据来定义【BeanDefinition】实例。 在这两种情况下，定义表达式的语法形式都是`#{<expression string>}`。  -->
+    <bean id="employee" class="org.example.Employee">
+        <property name="salary" value="#{ T(java.lang.Math).random() * 100.0 }"/>
+
+    </bean>
+
+</beans>

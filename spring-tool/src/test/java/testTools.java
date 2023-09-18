@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.expression.Expression;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -95,5 +97,22 @@ public class testTools {
         hashMap.forEach((key, val) -> {
             System.out.println(key + " -> " + val);
         });
+    }
+
+    // 测试Spring表达式的xml配置方法
+    @Test
+    public void testSpEl_XML(){
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("SpEl.xml");
+        Employee bean = context.getBean(Employee.class);
+        logger.info("{}", bean);
+    }
+
+    // 测试Spring表达式的注解配置方法，要指定默认值，可以在字段、方法和方法或构造函数参数上放置“@Value”注解
+    @Test
+    public void testSpEl_Annotation(){
+        // Entity的话，不需要注入到容器里去获取
+        ApplicationContext context = new AnnotationConfigApplicationContext(Employee.class);
+        Employee bean = context.getBean(Employee.class);
+        logger.info("{}", bean);
     }
 }

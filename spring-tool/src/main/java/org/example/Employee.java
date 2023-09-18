@@ -1,5 +1,7 @@
 package org.example;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import java.util.Date;
 
 /**
@@ -10,6 +12,8 @@ import java.util.Date;
  */
 
 public class Employee {
+//    @Value("#{'lucy_fromAnnotation'}")
+    @Value("#{systemProperties['java.home']}")
     private String name;
 
     private float salary;
