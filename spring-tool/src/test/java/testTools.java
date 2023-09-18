@@ -37,8 +37,15 @@ public class testTools {
 
     @Test
     public void testPropertyEditor(){
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("propertyEditor.xml");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("propertyEditorAndConverter.xml");
         Company company = context.getBean(Company.class);
         logger.info("{}", company);
+    }
+
+    @Test
+    public void testConverter(){
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("propertyEditorAndConverter.xml");
+        Employee employee = context.getBean(Employee.class);
+        logger.info("{}", employee);
     }
 }

@@ -5,7 +5,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 		https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!--    <bean id="employee" class="org.example.Employee"/>-->
+    <bean id="employee" class="org.example.Employee">
+        <property name="name" value="firmament"/>
+        <property name="birthday" value="2017-05-05"/>
+    </bean>
+
     <bean id="company" class="org.example.Company">
         <property name="name" value="lucy"/>
         <!--以往来说，这里需要一个其他的bean，然后引用过来-->
@@ -21,6 +25,15 @@
                 <!--在这里说明了,哪个被字符串描述的属性需要用哪个PropertyEditor来识别-->
                 <entry key="org.example.Employee" value="org.example.EmployeeEditor"/>
             </map>
+        </property>
+    </bean>
+
+    <!--需要在xml中注册一下自定义的Converter-->
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="org.example.StringToDateConverter"/>
+            </set>
         </property>
     </bean>
 
