@@ -2,6 +2,7 @@ package org.example.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
  * @Date: 2023/9/19
@@ -12,5 +13,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan({"org.example.config", "org.example.service"})   // 扫包
+@EnableAspectJAutoProxy
 public class AppConfig {
 }
