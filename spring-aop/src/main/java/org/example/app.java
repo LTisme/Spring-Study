@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.config.AppConfig;
+import org.example.service.IOrderService;
 import org.example.service.IUserService;
 import org.example.service.impl.UserService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -19,6 +20,8 @@ public class app {
 //        UserService userService = context.getBean(UserService.class);
         // 必须是用接口类型去获得这个Bean，目前的我无法理解
         IUserService userService = context.getBean(IUserService.class);
+        IOrderService orderService = context.getBean(IOrderService.class);
         userService.register();
+        orderService.order();
     }
 }

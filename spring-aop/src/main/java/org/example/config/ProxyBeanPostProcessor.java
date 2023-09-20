@@ -15,7 +15,7 @@ import java.lang.reflect.Proxy;
  * @Description: AOP就是面向切面编程，具体的将，就是将有相同性质的某一层前后做横切，来统一对这一层做方法增强的意思
  */
 
-@Component
+//@Component
 public class ProxyBeanPostProcessor implements BeanPostProcessor {
 
     // 在所有初始化工作完成后，将对所有注入好了的Bean做一些统一的事务管理

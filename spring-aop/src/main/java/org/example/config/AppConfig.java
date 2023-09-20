@@ -12,7 +12,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  */
 
 @Configuration
-@ComponentScan({"org.example.config", "org.example.service"})   // 扫包
+@ComponentScan({"org.example.config", "org.example.service", "org.example.aspectj"})   // 扫包
 @EnableAspectJAutoProxy
 public class AppConfig {
 }
