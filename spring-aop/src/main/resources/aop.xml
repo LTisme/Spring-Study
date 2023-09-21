@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!-- 如果要用配置文件的方式配置aop，就需要有aop命名空间 -->
+
+    <!-- 下面这个就是开启的开关，等同于注解形式的 @EnableAspectJAutoProxy -->
+    <!-- <aop:aspectj-autoproxy/> -->
+
+    <bean class="org.example.aspectj.MyXmlAop" id="myXmlAop"/>
+    <bean class="org.example.service.impl.OrderService" id="orderService"/>
+    <bean class="org.example.service.impl.UserService" id="userService"/>
+
+    <!--一个文件里面可以定义多个aop配置-->
+    <aop:config>
+        <!--一个aop配置里可以定义多个切面-->
+        <aop:aspect id="myXmlAspect" ref="myXmlAop">
+            <aop:pointcut id="pointCut" expression="execution(* org.example..*(..)) "/>
+            <aop:before method="beforeAdvice" pointcut-ref="pointCut"/>
+            <aop:after-returning method="afterAdvice" pointcut-ref="pointCut"/>
+        </aop:aspect>
+    </aop:config>
+</beans>
