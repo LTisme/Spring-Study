@@ -17,10 +17,16 @@
     <!--一个文件里面可以定义多个aop配置-->
     <aop:config>
         <!--一个aop配置里可以定义多个切面-->
-        <aop:aspect id="myXmlAspect" ref="myXmlAop">
-            <aop:pointcut id="pointCut" expression="execution(* org.example..*(..)) "/>
-            <aop:before method="beforeAdvice" pointcut-ref="pointCut"/>
-            <aop:after-returning method="afterAdvice" pointcut-ref="pointCut"/>
-        </aop:aspect>
+        <!--        <aop:aspect id="myXmlAspect" ref="myXmlAop">-->
+        <!--            <aop:pointcut id="pointCut" expression="execution(* org.example..*(..)) "/>-->
+        <!--            <aop:before method="beforeAdvice" pointcut-ref="pointCut"/>-->
+        <!--            <aop:after-returning method="afterAdvice" pointcut-ref="pointCut"/>-->
+        <!--        </aop:aspect>-->
+
+        <!-- 还可以用这种方式来配置，也就是单独写一个满足Advice接口的类，让这个类成为Bean注入到容器，再让切面顾问引用它 -->
+        <aop:pointcut id="pointCut" expression="execution(* org.example..*(..))"/>
+        <aop:advisor advice-ref="myAdvisor" pointcut-ref="pointCut"/>
     </aop:config>
+
+    <bean class="org.example.aspectj.MyAdvisor" id="myAdvisor"/>
 </beans>

@@ -15,6 +15,5 @@ public class appByXml {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("aop.xml");
         IOrderService orderService = context.getBean(IOrderService.class);
         orderService.order();
-        System.out.println(orderService);
     }
 }
