@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.config.AppConfig;
+import org.example.service.IActivityService;
 import org.example.service.IOrderService;
 import org.example.service.IUserService;
 import org.example.service.impl.UserService;
@@ -23,5 +24,9 @@ public class app {
         IOrderService orderService = context.getBean(IOrderService.class);
         userService.register();
         orderService.order();
+
+        // 引入Introduction
+        IActivityService activityService = context.getBean(IActivityService.class);
+        activityService.sendGift();
     }
 }

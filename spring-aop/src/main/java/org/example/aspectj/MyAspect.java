@@ -1,8 +1,15 @@
 package org.example.aspectj;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.example.service.IActivityService;
+import org.example.service.impl.ActivityService;
 import org.springframework.stereotype.Component;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * @Date: 2023/9/19
@@ -23,7 +30,13 @@ public class MyAspect {
     private void beforePointcut() {} // 切入点方法签名
 
     @Before("org.example.aspectj.MyAspect.beforePointcut()")
-    private void beforeAdvice(){
+    private void beforeAdvice(JoinPoint jp) throws InvocationTargetException, IllegalAccessException {
+        // 通过方法签名拿到方法
+        MethodSignature signature = (MethodSignature)jp.getSignature();
+        Method method = signature.getMethod();
+        // 调用方法的过程
+        System.out.println("------------开始调用------------");
+        method.invoke(jp.getTarget(), jp.getArgs());
         System.out.println("This is before advice...");
     }
 
@@ -41,4 +54,9 @@ public class MyAspect {
         Object proceed = pjp.proceed();
         System.out.println("this is aroundAdvice2");
     }
+
+    // 这个声明的作用是：让代理对象实现新的接口，是让某个或某些类（比如这里是OrderService类）实现 某个具体实现类的接口（比如这里是实现 ActivityService 这个实现类的接口）
+    // 因为是要让某些类实现你想指定的实现类实现的接口，所以定义范围只能是类，不能是方法
+    @DeclareParents(value = "org.example.service.impl.OrderService", defaultImpl = ActivityService.class)
+    private static IActivityService activityService;
 }
