@@ -16,6 +16,6 @@ public class AccountTest {
     public void testTransfer(){
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("tx.xml");
         IAccountService accountService = context.getBean(IAccountService.class);
-        accountService.transfer("tom", "jerry", BigDecimal.valueOf(300));
+        accountService.transferByTransactionTemplate("tom", "jerry", BigDecimal.valueOf(300));
     }
 }

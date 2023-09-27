@@ -28,4 +28,9 @@ public class AccountService implements IAccountService {
     public void transfer(String from, String to, BigDecimal money) {
         transferDao.doTransfer(from, to, money);
     }
+
+    @Override
+    public void transferByTransactionTemplate(String from, String to, BigDecimal money) {
+        transferDao.doTransferByTransactionTemplate(from, to, money);
+    }
 }

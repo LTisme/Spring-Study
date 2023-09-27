@@ -5,6 +5,8 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.math.BigDecimal;
 
@@ -22,9 +24,12 @@ public class TransferDao {
 
     private DataSourceTransactionManager transactionManager;
 
-    public TransferDao(JdbcTemplate jdbcTemplate, DataSourceTransactionManager transactionManager) {
+    private TransactionTemplate transactionTemplate;
+
+    public TransferDao(JdbcTemplate jdbcTemplate, DataSourceTransactionManager transactionManager, TransactionTemplate transactionTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         this.transactionManager = transactionManager;
+        this.transactionTemplate = transactionTemplate;
     }
 
     public void doTransfer(String from, String to, BigDecimal money){
@@ -47,5 +52,20 @@ public class TransferDao {
         }
 
         transactionManager.commit(transactionStatus);
+    }
+
+    public void doTransferByTransactionTemplate(String from, String to, BigDecimal money){
+
+        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+            @Override
+            protected void doInTransactionWithoutResult(TransactionStatus status) {
+                String sql = "update account set money = money - ? where user_name = ?";
+                String sql2 = "update account set money = money + ? where user_name = ?";
+                jdbcTemplate.update(sql, money, from);
+                // 故意使其发生异常
+//                int i = 1/0;
+                jdbcTemplate.update(sql2, money, to);
+            }
+        });
     }
 }

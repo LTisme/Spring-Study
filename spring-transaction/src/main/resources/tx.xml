@@ -17,6 +17,11 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <!--使用事务模板，它也需要关联事务管理器-->
+    <bean class="org.springframework.transaction.support.TransactionTemplate" id="transactionTemplate">
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+
     <!--注入jdbc模板来操作数据库-->
     <bean class="org.springframework.jdbc.core.JdbcTemplate" id="jdbcTemplate">
         <property name="dataSource" ref="dataSource"/>

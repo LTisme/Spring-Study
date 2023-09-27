@@ -11,4 +11,5 @@ import java.math.BigDecimal;
 
 public interface IAccountService {
     void transfer(String from, String to, BigDecimal money);
+    void transferByTransactionTemplate(String from, String to, BigDecimal money);
 }
