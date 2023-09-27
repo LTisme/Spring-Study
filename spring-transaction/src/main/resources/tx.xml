@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		https://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!--引入jdbc配置，让数据源读入-->
+    <context:property-placeholder location="jdbc.properties"/>
+    <!--开启扫包-->
+    <context:component-scan base-package="org.example"/>
+
+    <!--注入事务管理器，它用来防止发生意外，比如转帐前扣完一方的钱发生异常了，那么这次扣钱应该失效而不是生效-->
+    <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--注入jdbc模板来操作数据库-->
+    <bean class="org.springframework.jdbc.core.JdbcTemplate" id="jdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--说明数据源-->
+    <bean class="com.alibaba.druid.pool.DruidDataSource" id="dataSource">
+        <property name="driverClassName" value="${driverName}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${user_name}"/>
+        <property name="password" value="${password}"/>
+    </bean>
 </beans>
