@@ -2,10 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 		https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context
-		https://www.springframework.org/schema/context/spring-context.xsd">
+		https://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!--引入jdbc配置，让数据源读入-->
     <context:property-placeholder location="jdbc.properties"/>
@@ -34,4 +36,14 @@
         <property name="username" value="${user_name}"/>
         <property name="password" value="${password}"/>
     </bean>
+
+    <!--编写AOP设置-->
+    <aop:config>
+        <!--先定义切点，这里我想先切dao层-->
+        <aop:pointcut id="pointCut" expression="execution(* org.example.dao..*(..))"/>
+        <!--引用写好的切面类，当然这个切面类需要被注入-->
+        <aop:advisor advice-ref="transactionAOP" pointcut-ref="pointCut"/>
+    </aop:config>
+
+    <bean class="org.example.aop.TransactionAOP" id="transactionAOP"/>
 </beans>

@@ -18,4 +18,11 @@ public class AccountTest {
         IAccountService accountService = context.getBean(IAccountService.class);
         accountService.transferByTransactionTemplate("tom", "jerry", BigDecimal.valueOf(300));
     }
+
+    @Test
+    public void testTransferWithAOP(){
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("tx.xml");
+        IAccountService accountService = context.getBean(IAccountService.class);
+        accountService.transferByTransactionTemplate("tom", "jerry", BigDecimal.valueOf(300));
+    }
 }
