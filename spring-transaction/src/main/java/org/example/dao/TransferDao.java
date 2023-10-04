@@ -40,7 +40,7 @@ public class TransferDao {
 
         jdbcTemplate.update(sql, money, from);
         // 故意使其发生异常
-        int i = 1 / 0;
+//        int i = 1 / 0;
         jdbcTemplate.update(sql2, money, to);
 
     }
