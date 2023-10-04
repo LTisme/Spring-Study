@@ -25,4 +25,11 @@ public class AccountTest {
         IAccountService accountService = context.getBean(IAccountService.class);
         accountService.transferByTransactionTemplate("tom", "jerry", BigDecimal.valueOf(300));
     }
+
+    @Test
+    public void testTransactional(){
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("annotation.xml");
+        IAccountService accountService = context.getBean(IAccountService.class);
+        accountService.transfer("tom", "jerry", BigDecimal.valueOf(300));
+    }
 }

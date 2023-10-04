@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        https://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--引入jdbc配置，让数据源读入-->
+    <context:property-placeholder location="jdbc.properties"/>
+    <!--开启扫包-->
+    <context:component-scan base-package="org.example"/>
+
+    <!--注入事务管理器，它用来防止发生意外，比如转帐前扣完一方的钱发生异常了，那么这次扣钱应该失效而不是生效-->
+    <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--使用事务模板，它也需要关联事务管理器-->
+    <bean class="org.springframework.transaction.support.TransactionTemplate" id="transactionTemplate">
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+
+    <!--注入jdbc模板来操作数据库-->
+    <bean class="org.springframework.jdbc.core.JdbcTemplate" id="jdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--说明数据源-->
+    <bean class="com.alibaba.druid.pool.DruidDataSource" id="dataSource">
+        <property name="driverClassName" value="${driverName}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${user_name}"/>
+        <property name="password" value="${password}"/>
+    </bean>
+
+    <!--开启这个配置，并配合在方法处使用@Transacational注解，就可以达到出错自动回滚的目的-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+</beans>

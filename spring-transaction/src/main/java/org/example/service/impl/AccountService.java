@@ -4,6 +4,7 @@ import org.example.dao.TransferDao;
 import org.example.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -25,6 +26,7 @@ public class AccountService implements IAccountService {
     }
 
     @Override
+    @Transactional
     public void transfer(String from, String to, BigDecimal money) {
         transferDao.doTransfer(from, to, money);
     }

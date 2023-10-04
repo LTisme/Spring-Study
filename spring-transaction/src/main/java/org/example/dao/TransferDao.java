@@ -32,29 +32,20 @@ public class TransferDao {
         this.transactionTemplate = transactionTemplate;
     }
 
-    public void doTransfer(String from, String to, BigDecimal money){
+    public void doTransfer(String from, String to, BigDecimal money) {
 
         // 转账其实就是两条语句，其实service作为业务逻辑层，不应该放具体的实现的，应该在Dao层做具体的与数据库的操作
         String sql = "update account set money = money - ? where user_name = ?";
         String sql2 = "update account set money = money + ? where user_name = ?";
 
-        // 但为了防止异常需要用事务管理器来管理事务的完整性
-        TransactionStatus transactionStatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
+        jdbcTemplate.update(sql, money, from);
+        // 故意使其发生异常
+        int i = 1 / 0;
+        jdbcTemplate.update(sql2, money, to);
 
-        try {
-            jdbcTemplate.update(sql, money, from);
-            // 故意使其发生异常
-            int i = 1/0;
-            jdbcTemplate.update(sql2, money, to);
-        } catch (RuntimeException e){
-            // 一旦发生异常就需要回滚来还原操作
-            transactionManager.rollback(transactionStatus);
-        }
-
-        transactionManager.commit(transactionStatus);
     }
 
-    public void doTransferByTransactionTemplate(String from, String to, BigDecimal money){
+    public void doTransferByTransactionTemplate(String from, String to, BigDecimal money) {
 
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             @Override
