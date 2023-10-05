@@ -26,7 +26,7 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    @Transactional
+//    @Transactional      // 如果取消外层事务，会让内层事务回滚，但是外层事务无法回滚
     public void transfer(String from, String to, BigDecimal money) {
         transferDao.doTransfer(from, to, money);
     }
